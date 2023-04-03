@@ -14,7 +14,7 @@ To make all of the images of one size, for the further work, use `scripts/resize
 
 []()
 ## TODO:
- 1. Test and validate LJ lemma (pure form, no kernels) on the dataset:
+ 1. Test and validate LJ lemma (pure form, no kernels) on the dataset (see `scripts/LJ_vanila.ipynb`):
     - make script for measuring distances and nice way of representing them
     - make script for doing LJ rangom matrix projection
     - test LJ lemma for various sizes of the reduced dimention and create several nice figures out of it
