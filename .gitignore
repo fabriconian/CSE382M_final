@@ -134,3 +134,5 @@ dmypy.json
 *.png 
 *.pdf
 
+#That annoying file
+.DS_Store
