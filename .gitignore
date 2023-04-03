@@ -133,6 +133,7 @@ dmypy.json
 *.jpg
 *.png 
 *.pdf
+*.docx
 
 #That annoying file
 .DS_Store
