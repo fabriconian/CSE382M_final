@@ -140,6 +140,8 @@ class DAE:
         encoded = BatchNormalization()(encoded)
         encoded = Activation('relu')(encoded)
 
+        latent = Input(shape=(self.latent_dim, ))
+
         encoded = Dense(self.latent_dim, activation='linear')(encoded)
         # 'decoded' is the lossy reconstruction of the input
         decoded = Dense(
@@ -170,6 +172,7 @@ class DAE:
 
         self.autoencoder = Model(inputs=input_img, outputs=decoded)
         self.autoencoder.compile(optimizer='Adam', loss='mse')
+        self.decoder = Model(inputs=encoded, outputs=decoded)
         self.encoder = Model(inputs=input_img, outputs=encoded)
 
     # return a fit deep encoder
@@ -367,7 +370,7 @@ class ReductionAnalysis:
 
         self.params = {
             "n_neighbors":
-            [i for i in range(1, int(np.sqrt(self.flat_dim)))]
+            [i for i in range(1, int(np.sqrt(self.X.shape[0])))]
         }
         self.random_search = RandomizedSearchCV(
             KNeighborsClassifier(),
@@ -468,5 +471,9 @@ class ReductionAnalysis:
             score=self.random_search.score(test_projections, self.y_test)
         
         return {'method': method, 'score': score, 'time': t_time, 'k': k}
-
-
+    
+    def estimate_baseline(self):
+        self.random_search.fit(self.x_train_flat, self.y_train)
+        score=self.random_search.score(self.x_test_flat, self.y_test)
+        self.score_baseline=score
+        return score
